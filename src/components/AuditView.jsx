@@ -1,15 +1,55 @@
 import { clearAudit } from "../api/gameApi"
+import { acknowledgePromotion } from "../api/gameApi"
 
 export default function AuditView({ state, refresh }) {
   const audit = state.lastAudit
+  const receptionist = state.receptionist
+  const justPromoted = receptionist.justPromoted
 
   const continueGame = async () => {
     await clearAudit()
     refresh()
   }
 
+  const acknowledge = async () => {
+    await acknowledgePromotion()
+    await refresh()
+  }
+
   return (
-    <div className="container py-5">
+    <div className="container py-5 position-relative">
+
+      {/* 🔔 PROMOTION POPUP */}
+      {justPromoted && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{
+            backgroundColor: "rgba(0,0,0,0.6)",
+            zIndex: 1050
+          }}
+        >
+          <div className="card shadow-lg border-0 text-center p-4" style={{ maxWidth: "420px" }}>
+            <h3 className="fw-bold mb-3">🎉 Promotion Earned!</h3>
+
+            <p className="mb-2">
+              The Guild recognizes your performance.
+            </p>
+
+            <p className="fs-5 fw-semibold">
+              New Rank: <span className="text-success">{receptionist.rank}</span>
+            </p>
+
+            <button
+              className="btn btn-success btn-lg mt-3"
+              onClick={acknowledge}
+            >
+              Acknowledge
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* NORMAL AUDIT UI */}
       <div className="row justify-content-center">
         <div className="col-lg-8">
 
@@ -77,6 +117,7 @@ export default function AuditView({ state, refresh }) {
               type="button"
               className="btn btn-primary btn-lg"
               onClick={continueGame}
+              disabled={justPromoted} // 👈 block until acknowledged
             >
               Begin Next Week
             </button>

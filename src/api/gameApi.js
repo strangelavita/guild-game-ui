@@ -1,4 +1,5 @@
 const API = "https://noble-rejoicing-production.up.railway.app/api"
+// const API = "http://localhost:8080/api"
 
 export const getState = () =>
   fetch(`${API}/state`).then(r => r.json())
@@ -49,5 +50,11 @@ export const loadGame = (slot) =>
 
 export const resetGame = () =>
   fetch(`${API}/state`, { method: "POST" })
+
+export const acknowledgePromotion = () => 
+  fetch(`${API}/audit/acknowledge/promotion`, { method: "POST" })
+
+
+
 
 
