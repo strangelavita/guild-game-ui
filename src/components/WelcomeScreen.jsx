@@ -108,7 +108,7 @@ export default function WelcomeScreen({ refresh }) {
                       rushed decisions later.
                     </li>
                     <li className="mb-2 text-muted">
-                      <strong>(In Progress)</strong> Promotions unlock advanced
+                      <strong>(In Progress- completed till rank c)</strong> Promotions unlock advanced
                       quests and elite adventurers based on your performance.
                     </li>
                     <li className="mb-2 text-muted">
