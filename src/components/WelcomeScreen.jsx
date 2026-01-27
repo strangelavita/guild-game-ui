@@ -120,6 +120,9 @@ export default function WelcomeScreen({ refresh }) {
                       Assigning a dangerous quest can result in death. Lost
                       adventurers are gone forever.
                     </li>
+                    <li className="mb-2 text-muted">
+                      <strong>(In Progress)</strong> Special weekly quests which will require more than one adventurers.
+                    </li>
                   </ol>
                 </div>
               )}
