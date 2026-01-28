@@ -1,5 +1,5 @@
-// const API = "https://noble-rejoicing-production.up.railway.app/api"
-export const API = "http://localhost:8080/api"
+const API = "https://noble-rejoicing-production.up.railway.app/api"
+// export const API = "http://localhost:8080/api"
 
 import { getStateId } from "../state/session"
 

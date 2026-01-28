@@ -77,7 +77,7 @@ export default function WelcomeScreen({ refresh }) {
                   className="btn btn-outline-secondary"
                   onClick={() => setShowHowToPlay(!showHowToPlay)}
                 >
-                  {showHowToPlay ? "Hide How to Play" : "How to Play"}
+                  {showHowToPlay ? "Hide How to Play & Dev Notes" : "How to Play & Dev Notes"}
                 </button>
               </div>
 
@@ -107,6 +107,10 @@ export default function WelcomeScreen({ refresh }) {
                       There is a daily work limit. Poor planning will force
                       rushed decisions later.
                     </li>
+                    <li className="mb-0">
+                      Assigning a dangerous quest can result in death. Lost
+                      adventurers are gone forever.
+                    </li>
                     <li className="mb-2 text-muted">
                       <strong>(In Progress- completed till rank c)</strong> Promotions unlock advanced
                       quests and elite adventurers based on your performance.
@@ -116,13 +120,16 @@ export default function WelcomeScreen({ refresh }) {
                       as their personal receptionist, guaranteeing weekly visits
                       and massive reputation gains.
                     </li>
-                    <li className="mb-0">
-                      Assigning a dangerous quest can result in death. Lost
-                      adventurers are gone forever.
-                    </li>
                     <li className="mb-2 text-muted">
                       <strong>(In Progress)</strong> Special weekly quests which will require more than one adventurers.
                     </li>
+                     <div className="alert alert-warning mb-0">
+            <strong>⚠ Save System Notice</strong>
+            <p className="mb-0">
+              Due to limited storage, only <strong>Slot 1</strong> is persistent.
+              Other slots may be deleted during maintenance.
+            </p>
+          </div>
                   </ol>
                 </div>
               )}
