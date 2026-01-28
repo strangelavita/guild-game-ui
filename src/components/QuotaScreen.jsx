@@ -17,7 +17,7 @@ export default function QuotaScreen({ state, refresh }) {
 
   // Initialize quota state dynamically
   const [quota, setQuota] = useState(
-    Object.fromEntries(allowedRanks.map(r => [r, 0]))
+    Object.fromEntries(allowedRanks.map(r => [r, 7]))
   )
 
   const changeQuota = (rank, delta) => {

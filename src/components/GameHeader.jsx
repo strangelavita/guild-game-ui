@@ -11,45 +11,54 @@ export default function GameHeader({ refresh }) {
     setTimeout(() => setToast(null), 3000)
   }
 
-  const handleSave = async () => {
-    try {
-      setBusy(true)
-      await saveGame(slot)
-      showToast(`Game saved to ${slot}`, "success")
-    } finally {
-      setBusy(false)
-    }
+ const handleSave = async () => {
+  try {
+    setBusy(true)
+    await saveGame(slot)
+    showToast(`Game saved to ${slot}`, "success")
+  } catch (err) {
+    showToast("❌ Failed to save game", "danger")
+  } finally {
+    setBusy(false)
   }
+}
 
-  const handleLoad = async () => {
-    try {
-      setBusy(true)
-      await loadGame(slot)
-      await refresh()
-      showToast(`Game loaded from ${slot}`, "primary")
-    } finally {
-      setBusy(false)
-    }
+
+ const handleLoad = async () => {
+  try {
+    setBusy(true)
+    await loadGame(slot)
+    await refresh()
+    showToast(`Game loaded from ${slot}`, "primary")
+  } catch (err) {
+    showToast("❌ Failed to load game", "danger")
+  } finally {
+    setBusy(false)
   }
+}
+
 
   const handleReset = async () => {
-    const ok = window.confirm(
-      "This will reset the current game.\nAre you sure?"
-    )
-    if (!ok) return
+  const ok = window.confirm(
+    "This will reset the current game.\nAre you sure?"
+  )
+  if (!ok) return
 
-    try {
-      setBusy(true)
-      await resetGame()
-      showToast("Game reset. Restarting...", "danger")
+  try {
+    setBusy(true)
+    await resetGame()
+    showToast("Game reset. Restarting...", "danger")
 
-      setTimeout(() => {
-        window.location.reload()
-      }, 1000)
-    } finally {
-      setBusy(false)
-    }
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000)
+  } catch (err) {
+    showToast("❌ Failed to reset game", "danger")
+  } finally {
+    setBusy(false)
   }
+}
+
 
   return (
     <>

@@ -1,60 +1,115 @@
-const API = "https://noble-rejoicing-production.up.railway.app/api"
-// const API = "http://localhost:8080/api"
+// const API = "https://noble-rejoicing-production.up.railway.app/api"
+export const API = "http://localhost:8080/api"
+
+import { getStateId } from "../state/session"
+
+function withStateId(url) {
+  const stateId = getStateId()
+  return `${url}?stateId=${stateId}`
+}
+
+/* ---------- STATE ---------- */
 
 export const getState = () =>
-  fetch(`${API}/state`).then(r => r.json())
+  fetch(withStateId(`${API}/state`))
+    .then(r => r.json())
+
+/* ---------- GAME ---------- */
 
 export const newGame = (payload) =>
-  fetch(`${API}/game/new`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  })
+  fetch(
+    withStateId(`${API}/game/new`),
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }
+  )
+
+
+/* ---------- QUOTA ---------- */
 
 export const submitQuota = (quota) =>
-  fetch(`${API}/quota/submit`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(quota)
-  })
+  fetch(
+    withStateId(`${API}/quota/submit`),
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(quota)
+    }
+  )
+
+/* ---------- RECEPTION ---------- */
 
 export const nextVisitor = () =>
-  fetch(`${API}/reception/next`, { method: "POST" })
-    .then(r => r.json())
+  fetch(
+    withStateId(`${API}/reception/next`),
+    { method: "POST" }
+  ).then(r => r.json())
 
 export const endDay = () =>
-  fetch(`${API}/reception/end-day`, { method: "POST" })
+  fetch(
+    withStateId(`${API}/reception/end-day`),
+    { method: "POST" }
+  )
+
+/* ---------- QUESTS ---------- */
 
 export const assignQuest = (payload) =>
-  fetch(`${API}/quests/assign`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  })
+  fetch(
+    withStateId(`${API}/quests/assign`),
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }
+  )
+
+/* ---------- SIMULATION ---------- */
 
 export const simulateWeek = () =>
-  fetch(`${API}/simulate/week`, { method: "POST" })
-    .then(r => r.json())
+  fetch(
+    withStateId(`${API}/simulate/week`),
+    { method: "POST" }
+  ).then(r => r.json())
+
+/* ---------- AUDIT ---------- */
 
 export const clearAudit = () =>
-  fetch(`${API}/audit/acknowledge`, {
-    method: "POST"
-  })
+  fetch(
+    withStateId(`${API}/audit/acknowledge`),
+    { method: "POST" }
+  )
 
+export const acknowledgePromotion = () =>
+  fetch(
+    withStateId(`${API}/audit/acknowledge/promotion`),
+    { method: "POST" }
+  )
 
-export const saveGame = (slot) =>
-  fetch(`${API}/save/${slot}`, { method: "POST" })
+/* ---------- SAVE / LOAD ---------- */
 
-export const loadGame = (slot) =>
-  fetch(`${API}/save/load/${slot}`, { method: "POST" })
+export const saveGame = async (slot) => {
+  const res = await fetch(
+    withStateId(`${API}/save/${slot}`),
+    { method: "POST" }
+  )
+  if (!res.ok) throw new Error("Save failed")
+}
 
-export const resetGame = () =>
-  fetch(`${API}/state`, { method: "POST" })
+export const loadGame = async (slot) => {
+  const res = await fetch(
+    withStateId(`${API}/save/load/${slot}`),
+    { method: "POST" }
+  )
+  if (!res.ok) throw new Error("Load failed")
+}
 
-export const acknowledgePromotion = () => 
-  fetch(`${API}/audit/acknowledge/promotion`, { method: "POST" })
-
-
-
-
+export const resetGame = async () => {
+  const res = await fetch(
+    withStateId(`${API}/state`),
+    { method: "POST" }
+  )
+  if (!res.ok) throw new Error("Reset failed")
+}
 
